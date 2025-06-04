@@ -5,7 +5,7 @@ using System;
 public class InputController : MonoBehaviour
 {
     private PlayerInputActions inputActions;
-    [SerializeField] private MinigameController minigameController;
+    [SerializeField] private GameMainManager gameMainManager;
 
     public event Action<Vector2> OnTap;
     public event Action OnSwipeUp;
@@ -37,7 +37,7 @@ public class InputController : MonoBehaviour
 
     private void Awake()
     {
-        minigameController = GetComponent<MinigameController>();
+        gameMainManager = GetComponent<GameMainManager>();
         inputActions = new PlayerInputActions();
     }
 
@@ -91,7 +91,6 @@ public class InputController : MonoBehaviour
     private void OnEnable()
     {
         inputActions.Enable();
-
         inputActions.Player.Tap.performed += OnTapPerformed;
         inputActions.Player.SwipeUp.performed += OnSwipeUpPerformed;
         inputActions.Player.JoystickRoll.performed += OnJoystickRollPerformed;
@@ -128,7 +127,7 @@ public class InputController : MonoBehaviour
         }
 
         //Debug.Log($"Tap/click at screen position: {screenPosition}");
-        minigameController.HandelTap();
+        gameMainManager.HandelTap();
         OnTap?.Invoke(screenPosition);
     }
 
@@ -143,7 +142,6 @@ public class InputController : MonoBehaviour
             OnSwipeUp?.Invoke();
         }
     }
-
 
     private void OnJoystickRollPerformed(InputAction.CallbackContext context)
     {
@@ -165,6 +163,7 @@ public class InputController : MonoBehaviour
         {
             isHolding = true;
             Debug.Log("Hold Started");
+            gameMainManager.HandelHold();
             OnHoldStart?.Invoke();
         }
     }
@@ -199,6 +198,7 @@ public class InputController : MonoBehaviour
         {
             Debug.Log($"Lift gesture detected! Delta Y: {delta.y}");
             lastLiftTime = timeNow;
+            gameMainManager.HandelLift();
             OnLift?.Invoke(currentAcceleration);
         }
 

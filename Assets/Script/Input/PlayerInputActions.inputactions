@@ -15,6 +15,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Hold",
+                    "type": "Button",
+                    "id": "21f181a1-8acb-4531-827b-f6d642971b0b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "SwipeUp",
                     "type": "PassThrough",
                     "id": "e44d9b8f-f4d8-4ec3-b324-b7b8ee7f4110",
@@ -36,15 +45,6 @@
                     "name": "Tap",
                     "type": "Button",
                     "id": "51115846-c545-4052-986c-4716313a260e",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Hold",
-                    "type": "Button",
-                    "id": "21f181a1-8acb-4531-827b-f6d642971b0b",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",

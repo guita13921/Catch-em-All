@@ -37,6 +37,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""Hold"",
+                    ""type"": ""Button"",
+                    ""id"": ""21f181a1-8acb-4531-827b-f6d642971b0b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""SwipeUp"",
                     ""type"": ""PassThrough"",
                     ""id"": ""e44d9b8f-f4d8-4ec3-b324-b7b8ee7f4110"",
@@ -58,15 +67,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""Tap"",
                     ""type"": ""Button"",
                     ""id"": ""51115846-c545-4052-986c-4716313a260e"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Hold"",
-                    ""type"": ""Button"",
-                    ""id"": ""21f181a1-8acb-4531-827b-f6d642971b0b"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -137,10 +137,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Lift = m_Player.FindAction("Lift", throwIfNotFound: true);
+        m_Player_Hold = m_Player.FindAction("Hold", throwIfNotFound: true);
         m_Player_SwipeUp = m_Player.FindAction("SwipeUp", throwIfNotFound: true);
         m_Player_JoystickRoll = m_Player.FindAction("JoystickRoll", throwIfNotFound: true);
         m_Player_Tap = m_Player.FindAction("Tap", throwIfNotFound: true);
-        m_Player_Hold = m_Player.FindAction("Hold", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -203,19 +203,19 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Lift;
+    private readonly InputAction m_Player_Hold;
     private readonly InputAction m_Player_SwipeUp;
     private readonly InputAction m_Player_JoystickRoll;
     private readonly InputAction m_Player_Tap;
-    private readonly InputAction m_Player_Hold;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Lift => m_Wrapper.m_Player_Lift;
+        public InputAction @Hold => m_Wrapper.m_Player_Hold;
         public InputAction @SwipeUp => m_Wrapper.m_Player_SwipeUp;
         public InputAction @JoystickRoll => m_Wrapper.m_Player_JoystickRoll;
         public InputAction @Tap => m_Wrapper.m_Player_Tap;
-        public InputAction @Hold => m_Wrapper.m_Player_Hold;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -228,6 +228,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Lift.started += instance.OnLift;
             @Lift.performed += instance.OnLift;
             @Lift.canceled += instance.OnLift;
+            @Hold.started += instance.OnHold;
+            @Hold.performed += instance.OnHold;
+            @Hold.canceled += instance.OnHold;
             @SwipeUp.started += instance.OnSwipeUp;
             @SwipeUp.performed += instance.OnSwipeUp;
             @SwipeUp.canceled += instance.OnSwipeUp;
@@ -237,9 +240,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Tap.started += instance.OnTap;
             @Tap.performed += instance.OnTap;
             @Tap.canceled += instance.OnTap;
-            @Hold.started += instance.OnHold;
-            @Hold.performed += instance.OnHold;
-            @Hold.canceled += instance.OnHold;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -247,6 +247,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Lift.started -= instance.OnLift;
             @Lift.performed -= instance.OnLift;
             @Lift.canceled -= instance.OnLift;
+            @Hold.started -= instance.OnHold;
+            @Hold.performed -= instance.OnHold;
+            @Hold.canceled -= instance.OnHold;
             @SwipeUp.started -= instance.OnSwipeUp;
             @SwipeUp.performed -= instance.OnSwipeUp;
             @SwipeUp.canceled -= instance.OnSwipeUp;
@@ -256,9 +259,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Tap.started -= instance.OnTap;
             @Tap.performed -= instance.OnTap;
             @Tap.canceled -= instance.OnTap;
-            @Hold.started -= instance.OnHold;
-            @Hold.performed -= instance.OnHold;
-            @Hold.canceled -= instance.OnHold;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -279,9 +279,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         void OnLift(InputAction.CallbackContext context);
+        void OnHold(InputAction.CallbackContext context);
         void OnSwipeUp(InputAction.CallbackContext context);
         void OnJoystickRoll(InputAction.CallbackContext context);
         void OnTap(InputAction.CallbackContext context);
-        void OnHold(InputAction.CallbackContext context);
     }
 }

@@ -1,43 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Enums;
 
 public class MinigameController : MonoBehaviour
 {
-    public MinigameStage minigameStage;
-    [SerializeField] TimingMinigame timingMinigame;
+    GameMainManager gameMainManager;
 
-    public enum MinigameStage
-    {
-        Tap_Minigame,
-        Lift_Minigame,
-        Swipe_Minigame,
-        Joystick_Minigame,
-        Timing_Minigame,
-        None
-    }
+    // Minigame
+    TimingMinigame timingMinigame;
 
     void Awake()
     {
-        minigameStage = MinigameStage.None;
         timingMinigame = GetComponentInChildren<TimingMinigame>();
     }
 
-    public void HandelTap()
+    public void Tap_Minigame()
     {
-        switch (minigameStage)
-        {
-            case MinigameStage.Timing_Minigame:
-                timingMinigame.PressTap();
-                Debug.Log("PressTap");
-                break;
-            case MinigameStage.None:
-                // code block
-                break;
-            default:
-                // code block
-                break;
-        }
 
+    }
+
+    public void Lift_Minigame()
+    {
+
+    }
+
+    public void FirstLift_Minigame()
+    {
+
+    }
+
+    public void Swipe_Minigame()
+    {
+
+    }
+
+    public void Joystick_Minigame()
+    {
+
+    }
+
+    public void Timing_MinigamePressTap()
+    {
+        timingMinigame.PressTap();
     }
 }

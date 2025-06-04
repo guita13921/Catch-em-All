@@ -26,6 +26,7 @@ public class TimingMinigame : MonoBehaviour
     public float successRange = 0.6f; // From -0.6 to 0.6
     public KeyCode hitKey = KeyCode.Space;
     public int score = 0;
+    public GameObject successBar;
 
     private float elapsedTime;
 
@@ -65,10 +66,18 @@ public class TimingMinigame : MonoBehaviour
         {
             score++;
             Debug.Log("✅ Hit! Score: " + score);
+            StartCoroutine(ShowSuccessBar());
         }
         else
         {
             Debug.Log("❌ Miss. Ball was at offset: " + offsetFromCenter.ToString("F2"));
         }
+    }
+
+    private System.Collections.IEnumerator ShowSuccessBar()
+    {
+        successBar.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        successBar.SetActive(false);
     }
 }
