@@ -73,6 +73,7 @@ public class IconController : MonoBehaviour
     public void OnChangeBaitPressed()
     {
         Debug.Log("Change Bait pressed");
+        gameMainManager.fishingController.ChangeBait();
         // Open shop interface
     }
 }

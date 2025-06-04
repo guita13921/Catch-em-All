@@ -5,17 +5,15 @@ using static Enums;
 
 public class GameMainManager : MonoBehaviour
 {
-    InputController inputController;
-    MinigameController minigameController;
-    FishingController fishingController;
-
+    public MinigameController minigameController;
+    public FishingController fishingController;
     public GameStage gameStage;
+    public bool isPlayingMiniGame;
 
     void Awake()
     {
         gameStage = GameStage.Mainmenu;
-        inputController = GetComponent<InputController>();
-        minigameController = GetComponent<MinigameController>();
+        minigameController = GetComponentInChildren<MinigameController>();
         fishingController = GetComponent<FishingController>();
     }
 
@@ -24,7 +22,11 @@ public class GameMainManager : MonoBehaviour
         switch (gameStage)
         {
             case GameStage.Timing_Minigame:
-                minigameController.Timing_MinigamePressTap();
+                minigameController.Timing_MinigamePressTab();
+                break;
+
+            case GameStage.Tap_Minigame:
+                minigameController.Tap_MinigamePressTab();
                 break;
 
             case GameStage.None:

@@ -30,6 +30,11 @@ public class TimingMinigame : MonoBehaviour
 
     private float elapsedTime;
 
+    public void StartGame()
+    {
+        //Show UI
+    }
+
     void Update()
     {
         if (ball == null) return;
@@ -58,7 +63,7 @@ public class TimingMinigame : MonoBehaviour
         ball.anchoredPosition = new Vector2(posX, current.y);
     }
 
-    public void PressTap()
+    public void PressTab()
     {
         float offsetFromCenter = ball.anchoredPosition.x - centerX;
 

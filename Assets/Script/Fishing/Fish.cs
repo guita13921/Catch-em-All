@@ -21,6 +21,13 @@ public class Fish : ScriptableObject
     public FishRarity rarity;
     public TimeWindow catchTime;
 
+    [Header("Force")]
+    public float force;
+    public float cooldown;
+
+    [Header("Item Drop")]
+    public Item dropItem;
+
     // Add other attributes like price, seasons, weather, etc.
 }
 

@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class SpriteButton : MonoBehaviour
 {
-    public enum ButtonType { Start, Settings, Inventory, Kitchen, Shop, ChangeBait }
+    public enum ButtonType { Start, Settings, Inventory, Kitchen, Shop, ChangeBait, Tab }
     public ButtonType buttonType;
 
     private void OnMouseDown()

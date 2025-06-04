@@ -15,7 +15,15 @@ public class Enums : MonoBehaviour
         WaitingFish, //รอปลามากินเหยื่อ
         BaitedFish, //ปลากินเหยื่อแล้ว
         FirstLift_Minigame,
+        ChangingMiniGame,
         Mainmenu,
         None
+    }
+
+    public enum ItemType
+    {
+        Fish,
+        Food,
+        Bait
     }
 }
