@@ -16,12 +16,14 @@ public class FishingController : MonoBehaviour
 
     [Header("Fishing Context")]
     public List<Bait> allBait;
-
     [SerializeField] private Bait currentBait;
     private int baitIndex = 0;
-
     public Fish currentFish;
     public int currentHour;
+
+    [Header("Minigame change time")]
+    public float miniGameTimer = 0f;
+    public float miniGameInterval = 15f;
 
     private bool isWaitingForFish = false;
     private bool isWaitingForLift = false;
@@ -37,6 +39,22 @@ public class FishingController : MonoBehaviour
 
     void Update()
     {
+        if (gameMainManager.isPlayingMiniGame)
+        {
+            miniGameTimer += Time.deltaTime;
+            if (miniGameTimer >= miniGameInterval) //เปลี่ยนเกมทุก miniGameInterval วินาที
+            {
+                miniGameTimer = 0f;
+                gameMainManager.minigameController.ChangeMinigame(currentFish);
+            }
+        }
+        else if (gameMainManager.gameStage == GameStage.ChangingMiniGame)
+        {
+            miniGameTimer = 0f;
+            // Do nothing during transition
+            return;
+        }
+
         if (gameMainManager.gameStage == GameStage.WaitingFish && !isWaitingForFish)
         {
             StartCoroutine(WaitAndCatchFish()); // Call GetRandomCatchableFish
@@ -50,12 +68,12 @@ public class FishingController : MonoBehaviour
             if (!isFishPulling)
             {
                 StartCoroutine(FishPullRoutine());
-                Debug.Log("isFishPulling");
             }
         }
         else
         {
             isFishPulling = false; // Reset flag when minigame ends
+            playerLifted = false;
         }
     }
 
@@ -157,6 +175,14 @@ public class FishingController : MonoBehaviour
         return catchableFish[Random.Range(0, catchableFish.Count)];
     }
 
+    public void CurrentFishCatched()
+    {
+        gameMainManager.gameStage = GameStage.PrepareFishing;
+        inventoryManager.AddItem(currentFish.dropItem, 1);
+        gameMainManager.isPlayingMiniGame = false;
+        currentFish = null;
+    }
+
     IEnumerator FishPullRoutine()
     {
         isFishPulling = true;
@@ -169,17 +195,9 @@ public class FishingController : MonoBehaviour
             if (currentFish != null)
             {
                 tensionMeterManager.AddPullForceFish(currentFish.force);
-                Debug.Log("🐟 Fish pulls the line!");
             }
         }
 
         isFishPulling = false;
-    }
-
-    public void CurrentFishCatched()
-    {
-        gameMainManager.gameStage = GameStage.PrepareFishing;
-        inventoryManager.AddItem(currentFish.dropItem, 1);
-        currentFish = null;
     }
 }

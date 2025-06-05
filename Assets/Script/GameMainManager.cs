@@ -62,7 +62,8 @@ public class GameMainManager : MonoBehaviour
                 fishingController.PlayerLiftedRod();
                 break;
 
-            case GameStage.None:
+            case GameStage.Lift_Minigame:
+                minigameController.lift_MinigameLift();
                 break;
 
             default:
@@ -71,5 +72,32 @@ public class GameMainManager : MonoBehaviour
         }
     }
 
+    public void HandelSwipe()
+    {
+        switch (gameStage)
+        {
+            case GameStage.Swipe_Minigame:
+                minigameController.Swipe_MinigameSwipe();
+                break;
 
+            default:
+
+                break;
+        }
+    }
+
+    public void HandleRoll()
+    {
+        switch (gameStage)
+        {
+            case GameStage.Joystick_Minigame:
+                minigameController.Joystick_MinigameRoll();
+                break;
+
+            default:
+
+                break;
+        }
+
+    }
 }

@@ -4,6 +4,8 @@ using TMPro;
 
 public class TimingMinigame : MonoBehaviour
 {
+    TensionMeterManager tensionMeterManager;
+
     public enum MotionPattern
     {
         SineWave,
@@ -24,11 +26,15 @@ public class TimingMinigame : MonoBehaviour
 
     [Header("Scoring")]
     public float successRange = 0.6f; // From -0.6 to 0.6
-    public KeyCode hitKey = KeyCode.Space;
-    public int score = 0;
     public GameObject successBar;
+    public GameObject successButton;
 
     private float elapsedTime;
+
+    void Awake()
+    {
+        tensionMeterManager = FindAnyObjectByType<TensionMeterManager>();
+    }
 
     public void StartGame()
     {
@@ -69,8 +75,7 @@ public class TimingMinigame : MonoBehaviour
 
         if (Mathf.Abs(offsetFromCenter) <= successRange)
         {
-            score++;
-            Debug.Log("✅ Hit! Score: " + score);
+            tensionMeterManager.AddPullForcePlayer(1f);
             StartCoroutine(ShowSuccessBar());
         }
         else
@@ -82,7 +87,10 @@ public class TimingMinigame : MonoBehaviour
     private System.Collections.IEnumerator ShowSuccessBar()
     {
         successBar.SetActive(true);
+        successButton.SetActive(true);
         yield return new WaitForSeconds(0.1f);
         successBar.SetActive(false);
+        successButton.SetActive(false);
     }
+
 }

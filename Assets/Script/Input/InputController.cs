@@ -76,6 +76,7 @@ public class InputController : MonoBehaviour
                     OnJoystickRoll?.Invoke(isClockwise ? 1f : -1f); // Trigger with +1 or -1 depending on direction
 
                     // Reset for next rotation
+                    gameMainManager.HandleRoll();
                     totalRotation = 0f;
                     isRotating = false;
                 }
@@ -139,6 +140,7 @@ public class InputController : MonoBehaviour
         {
             Debug.Log("Swipe Up Detected");
             lastSwipeTime = Time.time;
+            gameMainManager.HandelSwipe();
             OnSwipeUp?.Invoke();
         }
     }

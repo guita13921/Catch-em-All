@@ -10,9 +10,10 @@ public class MinigameController : MonoBehaviour
 
     [SerializeField] TimingMinigame timingMinigame;
     [SerializeField] TapMiniGame tapMiniGame;
-    //LiftMiniGame liftMiniGame;
-    //SwipeMiniGame swipeMiniGame;
-    //JoystickMiniGame joystickMiniGame;
+    [SerializeField] LiftMiniGame liftMiniGame;
+    [SerializeField] SwipeMiniGame swipeMiniGame;
+    [SerializeField] JoystickMiniGame joystickMiniGame;
+
 
     void Awake()
     {
@@ -59,19 +60,33 @@ public class MinigameController : MonoBehaviour
 
             // Extend here as you implement more
             case "Lift":
-                UnityEngine.Debug.Log("Lift minigame not implemented yet.");
+                gameMainManager.gameStage = GameStage.Lift_Minigame;
+                liftMiniGame = GetComponentInChildren<LiftMiniGame>();
+                liftMiniGame.StartGame();
                 break;
 
             case "Swipe":
-                UnityEngine.Debug.Log("Swipe minigame not implemented yet.");
+                gameMainManager.gameStage = GameStage.Swipe_Minigame;
+                swipeMiniGame = GetComponentInChildren<SwipeMiniGame>();
+                swipeMiniGame.StartGame();
                 break;
 
             case "Joystick":
-                UnityEngine.Debug.Log("Joystick minigame not implemented yet.");
+                gameMainManager.gameStage = GameStage.Joystick_Minigame;
+                joystickMiniGame = GetComponentInChildren<JoystickMiniGame>();
+                joystickMiniGame.StartGame();
                 break;
         }
     }
 
+    public void ChangeMinigame(Fish currentFish)
+    {
+        //Play VFX for change minigame 
+        //delay ...
+        gameMainManager.gameStage = GameStage.ChangingMiniGame;
+        StartMiniGame(currentFish);
+
+    }
 
     public void Tap_MinigamePressTab() //Show UI control UI 
     {
@@ -81,5 +96,20 @@ public class MinigameController : MonoBehaviour
     public void Timing_MinigamePressTab()
     {
         timingMinigame.PressTab();
+    }
+
+    public void lift_MinigameLift()
+    {
+        liftMiniGame.HandleLift();
+    }
+
+    public void Swipe_MinigameSwipe()
+    {
+        swipeMiniGame.HandleSwipe();
+    }
+
+    public void Joystick_MinigameRoll()
+    {
+        joystickMiniGame.MNHandleRoll();
     }
 }

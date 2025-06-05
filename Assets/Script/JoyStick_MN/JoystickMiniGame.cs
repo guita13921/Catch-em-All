@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TapMiniGame : MonoBehaviour
+public class JoystickMiniGame : MonoBehaviour
 {
 
     TensionMeterManager tensionMeterManager;
@@ -24,8 +24,8 @@ public class TapMiniGame : MonoBehaviour
 
     }
 
-    public void PressTab()
+    public void MNHandleRoll()
     {
-        tensionMeterManager.AddPullForcePlayer(1f);
+        tensionMeterManager.AddPullForcePlayer(5f);
     }
 }
